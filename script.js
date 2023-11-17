@@ -31,10 +31,10 @@ const enableButtons = () => {
 const winFunction = (letter) =>{
     disabledButtons();
     if(letter == "X"){
-        msgRef.innerHTML = "&#x1F389; <br> 'X' Wins";
+        msgRef.innerHTML = "&#x1F389; <br> Player X Wins";
     }
     else{
-        msgRef.innerHTML = "&#x1F389; <br> 'O' Wins";
+        msgRef.innerHTML = "&#x1F389; <br> Player O Wins";
     }
 };
 

@@ -3,6 +3,8 @@ let popupRef = document.querySelector(".popup");
 let newgameBtn = document.getElementById("newGAME");
 let restartBtn = document.getElementById("restart");
 let msgRef = document.getElementById("message");
+let playerTurnRef = document.getElementById("playerTurn");
+
 // winning pattern array
 let winningPattern = [[0,1,2], [0,3,6], [1,4,7], [2,5,8], [3,4,5], [6,7,8], [0,4,8], [2,4,6]] ;
 
@@ -16,6 +18,17 @@ const disabledButtons = () => {
     //enable popup
     popupRef.classList.remove("hide");
 }
+
+//changing the turn
+const updatePlayerTurn = (gameOver = false) => {
+    if(!gameOver){
+        playerTurnRef.innerText = `Player ${xTurn ? 'X' : 'O'}'s Turn`;
+    }
+    else{
+        playerTurnRef.innerText = ''; //clear the text
+        playerTurnRef.style.display = 'none'; // hide the element
+    }
+};
 
 //enable all buttons  (for new game and restart) 
 const enableButtons = () => {
@@ -36,22 +49,28 @@ const winFunction = (letter) =>{
     else{
         msgRef.innerHTML = "&#x1F389; <br> Player O Wins";
     }
+    updatePlayerTurn(true);
 };
 
 //function for draw
 const drawFunstion = () => {
     disabledButtons();
     msgRef.innerHTML = "&#x1F60E; <br> It's a Draw";
+    updatePlayerTurn(true);
 };
 
 //new game
 newgameBtn.addEventListener("click", () =>{
     count = 0;
     enableButtons();
+    xTurn = true;
+    playerTurnRef.style.display = 'block';
+    updatePlayerTurn(); // Display initial player's turn
 });
 restartBtn.addEventListener("click", () => {
     count = 0;
     enableButtons();
+    updatePlayerTurn(); // Display initial player's turn
 });
 
 
@@ -80,12 +99,14 @@ btnRef.forEach((element)=>{
     element.addEventListener("click", () => {
         if(xTurn){
             xTurn = false;
+            updatePlayerTurn();
             //display x
             element.innerText = "X";
             element.disabled = true;
         }
         else{
             xTurn = true;
+            updatePlayerTurn();
             //display o
             element.innerText = "O";
             element.disabled = true;
